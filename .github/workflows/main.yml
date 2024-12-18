@@ -1,4 +1,4 @@
-name: Test and Format Workflow
+name: CI/CD
 
 on:
     push:
@@ -33,8 +33,3 @@ jobs:
             
             - name: Test
               run: pytest
-
-
-
-
-        
