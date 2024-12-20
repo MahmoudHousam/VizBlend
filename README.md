@@ -30,11 +30,6 @@ Besides its main job, this repo intends to teach aspiring data analysts or even 
 
     ##### Useful Resources
 
-    These are the resources that helped this work appear
-    * [GitHub Actions for Python Packages: How to Automate Releases to PyPi](https://www.youtube.com/watch?v=NMQwzI9hprg&ab_channel=ArjanCodes)
-  
-    * [Automated Python Unit Testing Made Easy with Pytest and GitHub Actions](https://pytest-with-eric.com/integrations/pytest-github-actions/)
-
     * [Building and testing Python | Official GitHub Actions Docs](https://docs.github.com/en/actions/use-cases-and-examples/building-and-testing/building-and-testing-python)
 
     * [pypi-publish | GitHub Action](https://github.com/marketplace/actions/pypi-publish)
