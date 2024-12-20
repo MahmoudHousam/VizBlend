@@ -15,12 +15,19 @@
         overflow: hidden;
       }
       .page {
-        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
         height: 100vh;
         width: 100vw;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
       }
       .active {
-        display: block;
+        opacity: 1;
+        visibility: visible;
+        z-index: 1;
       }
       .plotly-graph-div {
         height: 100vh !important;
@@ -65,11 +72,26 @@
               showPage(currentPage);
           }
       }
+      
+      function goToFirstPage() {
+          currentPage = 0;
+          showPage(currentPage);
+      }
+    
+      function goToLastPage() {
+          currentPage = totalPages - 1;
+          showPage(currentPage);
+      }
+    
       document.addEventListener('keydown', function(event) {
           if (event.key === 'ArrowLeft') {
               prevPage();
-          } else if (event.key === 'ArrowRight') {
+          } else if (event.key === 'ArrowRight' || event.key === ' ') {
               nextPage();
+          } else if (event.key === 'Home') {
+              goToFirstPage();
+          } else if (event.key === 'End') {
+              goToLastPage();
           }
       });
 
