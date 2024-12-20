@@ -52,6 +52,9 @@
     <script>
       var currentPage = 0;
       var totalPages = {{ total_pages }};
+      var slideTimer = null;
+      var timerRunning = false;
+
       function showPage(page) {
           document.querySelectorAll('.page').forEach(function(div, index) {
               div.classList.remove('active');
@@ -82,16 +85,45 @@
           currentPage = totalPages - 1;
           showPage(currentPage);
       }
+
+      function startTimer() {
+        if (!timerRunning) {
+          slideTimer = setInterval(() => {
+            if (currentPage < totalPages - 1) {
+              nextPage();
+            } else {
+              clearInterval(slideTimer);
+              timerRunning = false;
+            } 
+          }, 10000);
+          timerRunning = true;
+          console.log("Timer Started!");
+        }
+      }
+
+      function stopTimer() {
+        if (timerRunning) {
+          clearInterval(slideTimer);
+          timerRunning = false;
+          console.log("Timer Stopped!")
+        }
+      }
     
       document.addEventListener('keydown', function(event) {
           if (event.key === 'ArrowLeft') {
               prevPage();
-          } else if (event.key === 'ArrowRight' || event.key === ' ') {
+          } else if (event.key === 'ArrowRight') {
               nextPage();
           } else if (event.key === 'Home') {
               goToFirstPage();
           } else if (event.key === 'End') {
               goToLastPage();
+          } else if (event.key === ' ') {
+            if (timerRunning) {
+              stopTimer();
+            } else {
+              startTimer();
+            }
           }
       });
 
