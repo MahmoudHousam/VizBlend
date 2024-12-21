@@ -45,10 +45,29 @@
         text-align: center;
         margin-top: 40vh;
       }
+      .flash-message {
+        position: fixed;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+        z-index: 999;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .flash-message.show {
+        display: block;
+        opacity: 1;
+      }
     </style>
   </head>
   <body>
-    <!-- Initial report title -->
     <div id="page0" class="page active">
       <div class="report-title">{{ report_name }}</div>
     </div>
@@ -58,6 +77,7 @@
     <div id="page{{ total_pages }}" class="page">
       <div class="thank-you">Thank You</div>
     </div>
+    <div id="flash-message" class="flash-message"></div>
     <script>
       var currentPage = 0;
       var totalPages = {{ total_pages }} + 1;
@@ -72,27 +92,38 @@
               }
           });
       }
+
       function prevPage() {
           if (currentPage > 0) {
               currentPage--;
               showPage(currentPage);
           }
       }
+
       function nextPage() {
           if (currentPage < totalPages - 1) {
               currentPage++;
               showPage(currentPage);
           }
       }
-      
+
       function goToFirstPage() {
           currentPage = 0;
           showPage(currentPage);
       }
-    
+
       function goToLastPage() {
           currentPage = totalPages - 1;
           showPage(currentPage);
+      }
+
+      function showFlashMessage(message) {
+        var flashMessage = document.getElementById("flash-message");
+        flashMessage.textContent = message;
+        flashMessage.classList.add("show");
+        setTimeout(function () {
+          flashMessage.classList.remove("show");
+        }, 2000); // hide message after 2 seconds
       }
 
       function startTimer() {
@@ -103,10 +134,11 @@
             } else {
               clearInterval(slideTimer);
               timerRunning = false;
-            } 
+            }
           }, 10000);
           timerRunning = true;
           console.log("Timer Started!");
+          showFlashMessage("Timer Running...");
         }
       }
 
@@ -114,26 +146,27 @@
         if (timerRunning) {
           clearInterval(slideTimer);
           timerRunning = false;
-          console.log("Timer Stopped!")
+          console.log("Timer Stopped!");
+          showFlashMessage("Timer Stopped!");
         }
       }
-    
-      document.addEventListener('keydown', function(event) {
-          if (event.key === 'ArrowLeft') {
-              prevPage();
-          } else if (event.key === 'ArrowRight') {
-              nextPage();
-          } else if (event.key === 'Home') {
-              goToFirstPage();
-          } else if (event.key === 'End') {
-              goToLastPage();
-          } else if (event.key === ' ') {
-            if (timerRunning) {
-              stopTimer();
-            } else {
-              startTimer();
-            }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowLeft") {
+          prevPage();
+        } else if (event.key === "ArrowRight") {
+          nextPage();
+        } else if (event.key === "Home") {
+          goToFirstPage();
+        } else if (event.key === "End") {
+          goToLastPage();
+        } else if (event.key === " ") {
+          if (timerRunning) {
+            stopTimer();
+          } else {
+            startTimer();
           }
+        }
       });
 
       showPage(currentPage);
