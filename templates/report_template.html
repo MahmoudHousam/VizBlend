@@ -39,6 +39,12 @@
         text-align: center;
         margin-top: 40vh;
       }
+      .thank-you {
+        font-weight: bold;
+        font-size: 60px;
+        text-align: center;
+        margin-top: 40vh;
+      }
     </style>
   </head>
   <body>
@@ -49,9 +55,12 @@
     {% for div in divs %}
     <div id="page{{ loop.index }}" class="page">{{ div|safe }}</div>
     {% endfor %}
+    <div id="page{{ total_pages }}" class="page">
+      <div class="thank-you">Thank You</div>
+    </div>
     <script>
       var currentPage = 0;
-      var totalPages = {{ total_pages }};
+      var totalPages = {{ total_pages }} + 1;
       var slideTimer = null;
       var timerRunning = false;
 
