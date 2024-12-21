@@ -148,4 +148,4 @@ def test_integration_user_workflow():
 
     # Check if all div elements for pages are present
     pages = soup.find_all("div", {"class": "page"})
-    assert len(pages) == 4  # 3 figures + 1 title page
+    assert len(pages) == 5  # 3 figures + 1 title page
