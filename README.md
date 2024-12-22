@@ -11,21 +11,35 @@ Below is a preview of a report generated with VizBlend:
 
 ![VizBlend Thumbnail](https://cdn.jsdelivr.net/gh/MahmoudHousam/VizBlend@master/demo/preview1.gif)
 
-# Installation
+# Installation and use case
 
 Install vizBlend using pip:
 ```
 pip install vizBlend
 ```
+Import VizBlend and add figures
+```
+from vizblend import CreateReport  
+import plotly.graph_objects as go  
+
+report = CreateReport(report_title="Sales Report")  
+bar_fig = go.Figure(go.Bar(x=["A", "B", "C"], y=[10, 20, 30]))  
+report.add_figure(bar_fig, {"title": "Sales Data"})
+```
+Generate the report
+```
+report_file = report.blend_graphs_to_html()  
+print(f"Report saved to {report_file}")
+```
 
 # Learning Purpose
 
-Besides its main job, this repo intends to teach aspiring data analysts or even data scientists who cannot have full control over their coding cycle. With a simple mission: create visualizations and append them in one interactive report, you can take your learning curve up to include useful skills:
+Beside its main job, this repo intends to teach aspiring data analysts or even data scientists who cannot have full control over their coding cycle. With a simple mission: create visualizations and append them to an HTML file, you can take your learning curve up to include useful skills:
 * Write unit and integration tests with edge cases to ensure your code is not error-prone.
 
 * Write CI/CD workflows to run on every push or pull request to ensure the newly committed code is compatible enough.
 
-* Creating, managing and deploying your packaged code to PyPi so that you can simply run `pip install <package_name>` and start using it.
+* Creating, managing and deploying your package to PyPi so that you can simply run `pip install <package_name>` and start using it.
 
 
     ##### Useful Resources
