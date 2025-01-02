@@ -6,6 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 class CreateReport:
     def __init__(self, report_title: str, logo_path: str = None):
         self.report_title = report_title
+        self.logo_path = logo_path
         self.figures = []
 
     def add_figure(self, fig_or_func, options: dict):
@@ -49,6 +50,7 @@ class CreateReport:
             divs=divs,
             total_pages=len(divs) + 1,
             report_name=self.report_title,
+            logo_path=self.logo_path,
         )
         output_dir = "./"
         if not os.path.exists(output_dir):
