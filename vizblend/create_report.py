@@ -48,7 +48,7 @@ class CreateReport:
         # Render the template with the required variables
         html_content = template.render(
             divs=divs,
-            total_pages=len(divs) + 1,  # Include the initial report title page
+            total_pages=len(divs) + 1,
             report_name=self.report_title,
             logo_path=self.logo_path,
         )
