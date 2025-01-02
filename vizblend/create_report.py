@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 
 
 class CreateReport:
-    def __init__(self, report_title: str):
+    def __init__(self, report_title: str, logo_path: str = None):
         self.report_title = report_title
         self.figures = []
 
@@ -47,7 +47,7 @@ class CreateReport:
         # Render the template with the required variables
         html_content = template.render(
             divs=divs,
-            total_pages=len(divs) + 1,  # Include the initial report title page
+            total_pages=len(divs) + 1,
             report_name=self.report_title,
         )
         output_dir = "./"

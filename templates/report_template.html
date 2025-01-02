@@ -24,11 +24,77 @@
         visibility: hidden;
         transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
       }
+
       .active {
         opacity: 1;
         visibility: visible;
         z-index: 1;
       }
+
+      @keyframes outLeft {
+        0% {
+          left: 0vw;
+          top: 0px;
+        }
+        100% {
+          left: 100vw;
+          top: 0px;
+        }
+      }
+
+      @keyframes inLeft {
+        0% {
+          left: -100vw;
+          top: 0px;
+        }
+        100% {
+          left: 0vw;
+          top: 0px;
+        }
+      }
+
+      @keyframes outRight {
+        0% {
+          right: 0px;
+          top: 0px;
+        }
+        100% {
+          right: 100vw;
+          top: 0px;
+        }
+      }
+
+      @keyframes inRight {
+        0% {
+          left: 100vw;
+          top: 0px;
+        }
+        100% {
+          left: 0px;
+          top: 0px;
+        }
+      }
+
+      .onTransitionLeft .page {
+        animation-name: outLeft;
+        animation-duration: 0.5s;
+      }
+
+      .onTransitionRight .page {
+        animation-name: outRight;
+        animation-duration: 0.5s;
+      }
+
+      .onTransitionLeft .active {
+        animation-name: inLeft;
+        animation-duration: 0.5s;
+      }
+
+      .onTransitionRight .active {
+        animation-name: inRight;
+        animation-duration: 0.5s;
+      }
+
       .plotly-graph-div {
         height: 100vh !important;
         width: 100vw !important;
@@ -153,8 +219,12 @@
 
       document.addEventListener("keydown", function (event) {
         if (event.key === "ArrowLeft") {
+          document.body.classList.remove('onTransitionRight');
+          document.body.classList.add('onTransitionLeft');
           prevPage();
         } else if (event.key === "ArrowRight") {
+          document.body.classList.remove('onTransitionLeft');
+          document.body.classList.add('onTransitionRight');
           nextPage();
         } else if (event.key === "Home") {
           goToFirstPage();
