@@ -35,7 +35,9 @@ box_fig = go.Figure(go.Box(y=data_box, boxpoints="all", jitter=0.3))
 
 
 if __name__ == "__main__":
-    report = CreateReport(report_title="Example Report")
+    report = CreateReport(
+        report_title="Example Report", logo_path="Logo_TV_2015.svg.png"
+    )
     report.add_figure(bar_fig, bar_options)
     report.add_figure(scatter_fig, scatter_options)
     report.add_figure(pie_fig, pie_options)
