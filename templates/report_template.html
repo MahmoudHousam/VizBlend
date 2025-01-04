@@ -6,6 +6,7 @@
     <title>{{ report_name }}</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
+      /* General Reset */
       body,
       html {
         margin: 0;
@@ -14,13 +15,18 @@
         width: 100%;
         overflow: hidden;
       }
+
+      /* Logo Styling */
       .logo {
         width: 70px;
         margin: 20px;
+        position: absolute;
         top: 0;
         left: 0;
         z-index: 10;
       }
+
+      /* Page Styling */
       .page {
         position: absolute;
         top: 0;
@@ -32,92 +38,65 @@
         transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
       }
 
-      .active {
+      .page.active {
         opacity: 1;
         visibility: visible;
         z-index: 1;
       }
 
-      @keyframes outLeft {
-        0% {
-          left: 0vw;
-          top: 0px;
-        }
-        100% {
-          left: 100vw;
-          top: 0px;
-        }
+      /* Slide Transitions */
+      @keyframes slideOutLeft {
+        0% { left: 0; }
+        100% { left: 100vw; }
       }
 
-      @keyframes inLeft {
-        0% {
-          left: -100vw;
-          top: 0px;
-        }
-        100% {
-          left: 0vw;
-          top: 0px;
-        }
+      @keyframes slideInLeft {
+        0% { left: -100vw; }
+        100% { left: 0; }
       }
 
-      @keyframes outRight {
-        0% {
-          right: 0px;
-          top: 0px;
-        }
-        100% {
-          right: 100vw;
-          top: 0px;
-        }
+      @keyframes slideOutRight {
+        0% { right: 0; }
+        100% { right: 100vw; }
       }
 
-      @keyframes inRight {
-        0% {
-          left: 100vw;
-          top: 0px;
-        }
-        100% {
-          left: 0px;
-          top: 0px;
-        }
+      @keyframes slideInRight {
+        0% { left: 100vw; }
+        100% { left: 0; }
       }
 
       .onTransitionLeft .page {
-        animation-name: outLeft;
-        animation-duration: 0.5s;
+        animation: slideOutLeft 1s forwards;
       }
 
       .onTransitionRight .page {
-        animation-name: outRight;
-        animation-duration: 0.5s;
+        animation: slideOutRight 1s forwards;
       }
 
       .onTransitionLeft .active {
-        animation-name: inLeft;
-        animation-duration: 0.5s;
+        animation: slideInLeft 1s forwards;
       }
 
       .onTransitionRight .active {
-        animation-name: inRight;
-        animation-duration: 0.5s;
+        animation: slideInRight 1s forwards;
       }
 
+      /* Plotly Graph Styling */
       .plotly-graph-div {
         height: 100vh !important;
         width: 100vw !important;
       }
-      .report-title {
-        font-weight: bold;
-        font-size: 60px;
-        text-align: center;
-        margin-top: 40vh;
-      }
+
+      /* Report Title and Thank You Styling */
+      .report-title,
       .thank-you {
         font-weight: bold;
         font-size: 60px;
         text-align: center;
         margin-top: 40vh;
       }
+
+      /* Flash Message Styling */
       .flash-message {
         position: fixed;
         top: 50px;
@@ -130,12 +109,11 @@
         font-size: 16px;
         text-align: center;
         z-index: 999;
-        display: none;
         opacity: 0;
         transition: opacity 0.3s ease-in-out;
       }
+
       .flash-message.show {
-        display: block;
         opacity: 1;
       }
     </style>
@@ -144,6 +122,8 @@
     {% if logo_path %}
     <img src="{{ logo_path }}" alt="Logo" class="logo" />
     {% endif %}
+
+    <!-- Slides -->
     <div id="page0" class="page active">
       <div class="report-title">{{ report_name }}</div>
     </div>
@@ -153,102 +133,94 @@
     <div id="page{{ total_pages }}" class="page">
       <div class="thank-you">Thank You</div>
     </div>
+
+    <!-- Flash Message -->
     <div id="flash-message" class="flash-message"></div>
+
     <script>
-      var currentPage = 0;
-      var totalPages = {{ total_pages }} + 1;
-      var slideTimer = null;
-      var timerRunning = false;
+      // Slide Management
+      let currentPage = 0;
+      const totalPages = {{ total_pages }} + 1;
+      let slideTimer = null;
+      let timerRunning = false;
 
-      function showPage(page) {
-          document.querySelectorAll('.page').forEach(function(div, index) {
-              div.classList.remove('active');
-              if (index === page) {
-                  div.classList.add('active');
-              }
-          });
-      }
+      const showPage = (page) => {
+        document.querySelectorAll('.page').forEach((div, index) => {
+          div.classList.toggle('active', index === page);
+        });
+      };
 
-      function prevPage() {
-          if (currentPage > 0) {
-              currentPage--;
-              showPage(currentPage);
-          }
-      }
-
-      function nextPage() {
-          if (currentPage < totalPages - 1) {
-              currentPage++;
-              showPage(currentPage);
-          }
-      }
-
-      function goToFirstPage() {
-          currentPage = 0;
+      const prevPage = () => {
+        if (currentPage > 0) {
+          currentPage--;
+          document.body.classList.remove('onTransitionRight');
+          document.body.classList.add('onTransitionLeft');
           showPage(currentPage);
-      }
+        }
+      };
 
-      function goToLastPage() {
-          currentPage = totalPages - 1;
+      const nextPage = () => {
+        if (currentPage < totalPages - 1) {
+          currentPage++;
+          document.body.classList.remove('onTransitionLeft');
+          document.body.classList.add('onTransitionRight');
           showPage(currentPage);
-      }
+        }
+      };
 
-      function showFlashMessage(message) {
-        var flashMessage = document.getElementById("flash-message");
+      const goToFirstPage = () => {
+        currentPage = 0;
+        showPage(currentPage);
+      };
+
+      const goToLastPage = () => {
+        currentPage = totalPages - 1;
+        showPage(currentPage);
+      };
+
+      // Flash Message
+      const showFlashMessage = (message) => {
+        const flashMessage = document.getElementById('flash-message');
         flashMessage.textContent = message;
-        flashMessage.classList.add("show");
-        setTimeout(function () {
-          flashMessage.classList.remove("show");
-        }, 2000); // hide message after 2 seconds
-      }
+        flashMessage.classList.add('show');
+        setTimeout(() => flashMessage.classList.remove('show'), 2000);
+      };
 
-      function startTimer() {
+      // Timer Controls
+      const startTimer = () => {
         if (!timerRunning) {
           slideTimer = setInterval(() => {
-            if (currentPage < totalPages - 1) {
-              nextPage();
-            } else {
-              clearInterval(slideTimer);
-              timerRunning = false;
-            }
-          }, 10000);
+            if (currentPage < totalPages - 1) nextPage();
+            else stopTimer();
+          }, 5000);
           timerRunning = true;
-          console.log("Timer Started!");
-          showFlashMessage("Timer Running...");
+          showFlashMessage('Timer Running...');
         }
-      }
+      };
 
-      function stopTimer() {
+      const stopTimer = () => {
         if (timerRunning) {
           clearInterval(slideTimer);
           timerRunning = false;
-          console.log("Timer Stopped!");
-          showFlashMessage("Timer Stopped!");
+          showFlashMessage('Timer Stopped!');
         }
-      }
+      };
 
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "ArrowLeft") {
-          document.body.classList.remove('onTransitionRight');
-          document.body.classList.add('onTransitionLeft');
-          prevPage();
-        } else if (event.key === "ArrowRight") {
-          document.body.classList.remove('onTransitionLeft');
-          document.body.classList.add('onTransitionRight');
-          nextPage();
-        } else if (event.key === "Home") {
-          goToFirstPage();
-        } else if (event.key === "End") {
-          goToLastPage();
-        } else if (event.key === " ") {
-          if (timerRunning) {
-            stopTimer();
-          } else {
-            startTimer();
-          }
+      // Keyboard Navigation
+      document.addEventListener('keydown', (event) => {
+        switch (event.key) {
+          case 'ArrowLeft': prevPage(); break;
+          case 'ArrowRight': nextPage(); break;
+          case 'Home': goToFirstPage(); break;
+          case 'End': goToLastPage(); break;
+          case ' ':
+            if (timerRunning) stopTimer();
+            else startTimer();
+            break;
         }
       });
 
+      // Initialize
       showPage(currentPage);
     </script>
   </body>
