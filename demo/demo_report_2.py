@@ -1,5 +1,6 @@
+import random
+from datetime import datetime
 import plotly.graph_objects as go
-from datetime import datetime, timedelta
 from vizblend.create_report import CreateReport
 
 
@@ -11,7 +12,9 @@ def generate_time_series_data(start_date, end_date, categories):
 
     # Generate year range
     years = list(range(start_year, end_year + 1))
-    data = {category: [year * 10 for year in years] for category in categories}
+    data = {
+        category: [random.randint(50, 200) for _ in years] for category in categories
+    }
     return years, data
 
 
@@ -26,7 +29,7 @@ grouped_bar_options = {"title": "Grouped Bar Chart Example"}
 def create_bar_chart():
     categories = ["Category A", "Category B", "Category C"]
     values = [10, 20, 30]
-    bar_fig = go.Figure(data=[go.Bar(x=categories, y=values)])
+    bar_fig = go.Figure(data=[go.Bar(x=categories, y=values, texttemplate="%{y}%")])
     return bar_fig
 
 
@@ -59,7 +62,9 @@ def create_stacked_bar_chart():
 
     stacked_bar_fig = go.Figure()
     for category in categories:
-        stacked_bar_fig.add_trace(go.Bar(x=dates, y=data[category], name=category))
+        stacked_bar_fig.add_trace(
+            go.Bar(x=dates, y=data[category], name=category, texttemplate="%{y}%")
+        )
 
     stacked_bar_fig.update_layout(
         barmode="stack",
@@ -78,7 +83,9 @@ def create_grouped_bar_chart():
 
     grouped_bar_fig = go.Figure()
     for category in categories:
-        grouped_bar_fig.add_trace(go.Bar(x=dates, y=data[category], name=category))
+        grouped_bar_fig.add_trace(
+            go.Bar(x=dates, y=data[category], name=category, texttemplate="%{y}%")
+        )
 
     grouped_bar_fig.update_layout(
         barmode="group",
