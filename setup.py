@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="vizblend",
-    version="1.1.0",
+    version="2.0.0",
     author="Mahmoud Housam",
     author_email="mahmoudhousam60@gmail.com",
     description="Generate multi-page HTML file for Interactive analytical reporting with Python and Plotly",
@@ -14,10 +14,12 @@ setup(
     install_requires=[
         "plotly==5.24.1",
         "black==24.10.0",
-        "pytest==8.3.4",
+        "pytest==6.2.4",
         "pandas==2.2.3",
         "jinja2==3.1.4",
         "bs4==0.0.2",
+        "python-pptx==1.0.2",
+        "kaleido",
     ],
     classifiers=[
         "Programming Language :: Python :: 3.9",
