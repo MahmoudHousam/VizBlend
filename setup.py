@@ -5,7 +5,7 @@ setup(
     version="2.0.0",
     author="Mahmoud Housam",
     author_email="mahmoudhousam60@gmail.com",
-    description="Generate multi-page HTML file for Interactive analytical reporting with Python and Plotly",
+    description="Seamlessly integrates Plotly’s interactive visualizations into a single standalone HTML file offering a modern presentation-like experience with the flexibility of a web-based report",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/MahmoudHousam/VizBlend",
