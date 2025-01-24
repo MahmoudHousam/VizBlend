@@ -9,7 +9,7 @@ Whether you’re a data analyst, scientist, or developer, VizBlend streamlines t
 # Demo
 Below is a preview of a report generated with VizBlend:
 
-![VizBlend Thumbnail](https://cdn.jsdelivr.net/gh/MahmoudHousam/VizBlend@master/demo/preview2.gif)
+![VizBlend Thumbnail](https://cdn.jsdelivr.net/gh/MahmoudHousam/VizBlend@master/demo/preview.gif)
 
 # Installation and use case
 
