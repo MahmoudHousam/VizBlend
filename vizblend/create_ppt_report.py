@@ -14,7 +14,7 @@ class CreatePowerPoint:
 
     def create_presentation(self):
         output_dir = "./"
-
+        os.makedirs(output_dir, exist_ok=True)
         # title slide
         title_slide = self.presentation.slides.add_slide(
             self.presentation.slide_layouts[0]
