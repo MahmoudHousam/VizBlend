@@ -1,6 +1,6 @@
 plotly==5.24.1
 black==24.10.0
-pytest==8.3.4
+pytest==6.2.4
 pandas==2.2.3
 jinja2==3.1.4
 bs4==0.0.2
