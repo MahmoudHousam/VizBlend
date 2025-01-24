@@ -9,7 +9,9 @@ Whether you’re a data analyst, scientist, or developer, VizBlend streamlines t
 # Demo
 Below is a preview of a report generated with VizBlend:
 
+⭐ If You Like It, Start it, please! ⭐
 ![VizBlend Thumbnail](https://cdn.jsdelivr.net/gh/MahmoudHousam/VizBlend@master/demo/preview5.gif)
+[VizBlend Thumbnail](https://cdn.jsdelivr.net/gh/MahmoudHousam/VizBlend@master/demo/preview5.gif)
 
 # Installation and use case
 
@@ -47,3 +49,4 @@ Beside its main job, this repo intends to teach aspiring data analysts or even d
     * [Building and testing Python | Official GitHub Actions Docs](https://docs.github.com/en/actions/use-cases-and-examples/building-and-testing/building-and-testing-python)
 
     * [pypi-publish | GitHub Action](https://github.com/marketplace/actions/pypi-publish)
+
