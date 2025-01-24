@@ -28,13 +28,14 @@ class CreatePowerPoint:
                 self.presentation.slide_layouts[5]
             )
             image_path = f"{output_dir}figure_{i+1}.png"
-            figure.write_image(image_path)
+            # scale image to 3 for better image resolution
+            figure.write_image(image_path, scale=3)
             slide.shapes.add_picture(
                 image_path,
-                Inches(1),
-                Inches(1.5),
-                Inches(8),
-                Inches(5),
+                Inches(0),
+                Inches(0),
+                Inches(10),
+                Inches(7.5),
             )
             os.remove(image_path)
         # thank-you slide
