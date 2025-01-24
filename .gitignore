@@ -18,3 +18,4 @@ dist/
 *.egg-info/
 build-vizblend
 vizblind_env_2
+preview.mp4
